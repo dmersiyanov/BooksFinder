@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BooksFinder</string>
+    <string name="search_hint">Введите автора или  название книги</string>
+</resources>
