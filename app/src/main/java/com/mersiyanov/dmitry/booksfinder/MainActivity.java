@@ -10,26 +10,24 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.mersiyanov.dmitry.booksfinder.network.RetrofitHelper;
-import com.mersiyanov.dmitry.booksfinder.pojo.BooksResponse;
 import com.mersiyanov.dmitry.booksfinder.pojo.Item;
 
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import java.util.List;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
+    @Inject MainPresenter presenter;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private BooksAdapter adapter;
-    private RetrofitHelper retrofitHelper = new RetrofitHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BookFinderApp.component.injects(this);
 
         adapter = new BooksAdapter();
         recyclerView = findViewById(R.id.recycler_view);
@@ -38,41 +36,31 @@ public class MainActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search_bar);
         adapter.setClickListener(clickListener);
 
+        presenter.attachView(this);
+
+        if(presenter.getSavedData() != null) {
+            adapter.setItemList(presenter.getSavedData());
+        }
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 searchView.clearFocus();
-
-                retrofitHelper.getApi().getBooksInfo(query).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new SingleObserver<BooksResponse>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(BooksResponse booksResponse) {
-                                adapter.setItemList(booksResponse.getItems());
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
+                presenter.makeSearch(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) { return false; }
         });
+    }
 
+    public void showError(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 
-
+    public void showData(List<Item> itemList) {
+        adapter.setItemList(itemList);
     }
 
     @Override
@@ -104,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
-
-
-
+    @Override
+    protected void onDestroy() {
+        presenter.detachView();
+        super.onDestroy();
+    }
 }
