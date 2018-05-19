@@ -20,6 +20,8 @@
         <TextView
             android:id="@+id/book_title"
             android:text="Book Title"
+            android:textStyle="bold"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:layout_height="match_parent"
+    tools:context=".BookDetailsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <ImageView
+        android:id="@+id/book_big_cover"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="@dimen/big_padding"
+        android:src="@drawable/content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:text="Title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingLeft="@dimen/big_padding"
+        android:paddingRight="@dimen/big_padding"
+        android:paddingBottom="@dimen/big_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book_big_cover" />
+
+    <TextView
+        android:paddingLeft="@dimen/big_padding"
+        android:paddingRight="@dimen/big_padding"
+        android:text="Description"
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+
+</android.support.constraint.ConstraintLayout>

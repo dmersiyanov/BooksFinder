@@ -19,6 +19,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     private List<Item> itemList = new ArrayList<>();
     private OnBookClickListener clickListener;
 
+    public void clear() {
+        final int size = itemList.size();
+        itemList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,7 +39,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
 
         holder.bookTitle.setText(book.getVolumeInfo().getTitle());
         holder.bookDesc.setText(book.getVolumeInfo().getDescription());
-        Picasso.get().load(book.getVolumeInfo().getImageLinks().getSmallThumbnail()).into(holder.bookCover);
+        if(book.getVolumeInfo().getImageLinks().getSmallThumbnail() != null) {
+            Picasso.get().load(book.getVolumeInfo().getImageLinks().getSmallThumbnail()).into(holder.bookCover);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
