@@ -1,7 +1,7 @@
 package com.mersiyanov.dmitry.booksfinder.di;
 
-import com.mersiyanov.dmitry.booksfinder.MainPresenter;
 import com.mersiyanov.dmitry.booksfinder.network.GoogleApi;
+import com.mersiyanov.dmitry.booksfinder.ui.MainPresenter;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder;
+package com.mersiyanov.dmitry.booksfinder.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mersiyanov.dmitry.booksfinder.R;
 import com.mersiyanov.dmitry.booksfinder.pojo.Item;
 import com.squareup.picasso.Picasso;
 

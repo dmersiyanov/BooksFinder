@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder;
+package com.mersiyanov.dmitry.booksfinder.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mersiyanov.dmitry.booksfinder.R;
 import com.squareup.picasso.Picasso;
 
 public class BookDetailsActivity extends AppCompatActivity {

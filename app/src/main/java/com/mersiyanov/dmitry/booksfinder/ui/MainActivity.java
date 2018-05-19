@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder;
+package com.mersiyanov.dmitry.booksfinder.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.mersiyanov.dmitry.booksfinder.BookFinderApp;
+import com.mersiyanov.dmitry.booksfinder.R;
 import com.mersiyanov.dmitry.booksfinder.pojo.Item;
 
 import java.util.List;
@@ -18,7 +20,8 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Inject MainPresenter presenter;
+    @Inject
+    MainPresenter presenter;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private BooksAdapter adapter;

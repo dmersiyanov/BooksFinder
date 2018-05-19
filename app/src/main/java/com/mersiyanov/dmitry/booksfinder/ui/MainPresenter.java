@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder;
+package com.mersiyanov.dmitry.booksfinder.ui;
 
 import com.mersiyanov.dmitry.booksfinder.network.GoogleApi;
 import com.mersiyanov.dmitry.booksfinder.pojo.BooksResponse;
