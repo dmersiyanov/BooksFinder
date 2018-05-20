@@ -20,8 +20,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Inject
-    MainPresenter presenter;
+    @Inject MainPresenter presenter;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private BooksAdapter adapter;
@@ -32,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BookFinderApp.component.injects(this);
 
-        adapter = new BooksAdapter();
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        searchView = findViewById(R.id.search_bar);
-        adapter.setClickListener(clickListener);
+        initUI();
 
         presenter.attachView(this);
 
@@ -56,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) { return false; }
         });
+    }
+
+    private void initUI() {
+        adapter = new BooksAdapter();
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        searchView = findViewById(R.id.search_bar);
+        adapter.setClickListener(clickListener);
     }
 
     public void showError(String msg){
