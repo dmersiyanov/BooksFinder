@@ -1,6 +1,6 @@
 package com.mersiyanov.dmitry.booksfinder.di;
 
-import com.mersiyanov.dmitry.booksfinder.ui.MainActivity;
+import com.mersiyanov.dmitry.booksfinder.presentation.MainActivity;
 
 import javax.inject.Singleton;
 

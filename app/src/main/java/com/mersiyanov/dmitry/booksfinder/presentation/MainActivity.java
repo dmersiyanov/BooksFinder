@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder.ui;
+package com.mersiyanov.dmitry.booksfinder.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,25 +8,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mersiyanov.dmitry.booksfinder.BookFinderApp;
 import com.mersiyanov.dmitry.booksfinder.R;
-import com.mersiyanov.dmitry.booksfinder.pojo.Item;
+import com.mersiyanov.dmitry.booksfinder.domain.Entity.Item;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements com.mersiyanov.dmitry.booksfinder.presentation.View {
 
-    @Inject MainPresenter presenter;
+    @Inject BookSearchPresenter presenter;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private BooksAdapter adapter;
     private TextView screenHint;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +40,18 @@ public class MainActivity extends AppCompatActivity {
 
         presenter.attachView(this);
 
-        if(presenter.getSavedData() != null) {
-            adapter.setItemList(presenter.getSavedData());
+        if(presenter.getCache() != null) {
+            screenHint.setVisibility(View.GONE);
+            adapter.setItemList(presenter.getCache());
         }
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
                 screenHint.setVisibility(View.GONE);
+                showLoading(true);
                 presenter.makeSearch(query);
                 return true;
             }
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         searchView = findViewById(R.id.search_bar);
+        progressBar = findViewById(R.id.progress_bar);
         screenHint = findViewById(R.id.screen_hint);
         adapter.setClickListener(clickListener);
     }
@@ -70,8 +76,19 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void showData(List<Item> itemList) {
-        adapter.setItemList(itemList);
+    @Override
+    public void showLoading(boolean flag) {
+        if(flag) {
+            progressBar.setVisibility(View.VISIBLE);
+
+        } else progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showSearchResults(List<Item> books) {
+        adapter.setItemList(books);
+        progressBar.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -85,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_delete_search:
                 adapter.clear();
+                showLoading(false);
                 screenHint.setVisibility(View.VISIBLE);
                 return true;
             default:
@@ -109,4 +127,8 @@ public class MainActivity extends AppCompatActivity {
         presenter.detachView();
         super.onDestroy();
     }
+
+
+
+
 }

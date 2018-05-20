@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder.ui;
+package com.mersiyanov.dmitry.booksfinder.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;

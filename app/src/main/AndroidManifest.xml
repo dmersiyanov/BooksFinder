@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".presentation.MainActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.BookDetailsActivity"
-            android:parentActivityName=".ui.MainActivity"
+        <activity android:name=".presentation.BookDetailsActivity"
+            android:parentActivityName=".presentation.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>

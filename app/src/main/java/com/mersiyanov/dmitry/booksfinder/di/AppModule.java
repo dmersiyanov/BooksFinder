@@ -1,7 +1,10 @@
 package com.mersiyanov.dmitry.booksfinder.di;
 
-import com.mersiyanov.dmitry.booksfinder.network.GoogleApi;
-import com.mersiyanov.dmitry.booksfinder.ui.MainPresenter;
+import com.mersiyanov.dmitry.booksfinder.data.network.GoogleApi;
+import com.mersiyanov.dmitry.booksfinder.data.repositories.BookRepositoryImpl;
+import com.mersiyanov.dmitry.booksfinder.domain.BookRepository;
+import com.mersiyanov.dmitry.booksfinder.domain.BookSearchUseCase;
+import com.mersiyanov.dmitry.booksfinder.presentation.BookSearchPresenter;
 
 import javax.inject.Singleton;
 
@@ -18,12 +21,6 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MainPresenter provideMainPresenter(GoogleApi api) {
-        return new MainPresenter(api);
-    }
-
-    @Provides
-    @Singleton
     GoogleApi provideApi(){
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
@@ -36,6 +33,31 @@ public class AppModule {
                 .client(client)
                 .build()
                 .create(GoogleApi.class);
+    }
+
+    @Provides
+    @Singleton
+    BookRepositoryImpl provideBookRepositoryImpl(GoogleApi api) {
+        return new BookRepositoryImpl(api);
+    }
+
+    @Provides
+    @Singleton
+    BookRepository provideBookRepository(BookRepositoryImpl repository) {
+        return repository;
+    }
+
+    @Provides
+    @Singleton
+    BookSearchUseCase provideBookSearchUseCase(BookRepository bookRepository) {
+        return new BookSearchUseCase(bookRepository);
+    }
+
+
+    @Provides
+    @Singleton
+    BookSearchPresenter provideBookSearchPresenter(BookSearchUseCase useCase) {
+        return new BookSearchPresenter(useCase);
     }
 
 }

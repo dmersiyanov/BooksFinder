@@ -1,4 +1,4 @@
-package com.mersiyanov.dmitry.booksfinder.pojo;
+package com.mersiyanov.dmitry.booksfinder.domain.Entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
