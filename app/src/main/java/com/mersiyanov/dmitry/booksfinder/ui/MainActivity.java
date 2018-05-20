@@ -7,7 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mersiyanov.dmitry.booksfinder.BookFinderApp;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private BooksAdapter adapter;
+    private TextView screenHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
+                screenHint.setVisibility(View.GONE);
                 presenter.makeSearch(query);
                 return true;
             }
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         searchView = findViewById(R.id.search_bar);
+        screenHint = findViewById(R.id.screen_hint);
         adapter.setClickListener(clickListener);
     }
 
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_delete_search:
                 adapter.clear();
+                screenHint.setVisibility(View.VISIBLE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
